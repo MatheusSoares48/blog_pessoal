@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,9 +28,9 @@ public class Tema {
 		@NotBlank(message = "O Atributo Descrição é Obrigatorio e Não pode ser vazio") // NOT NULL do SQL só que não aceita nem espaço em branco ou pode usar NOT NULL que aceita espaços em branco
 		@Size(min = 5, max = 1000, message = "O Atributo Texto deve conter no mínimo 5 e no máximo 1000 carácteres.")
 		private String descricao;
-
-		@OneToMany(mappedBy = "tema", cascade = CascadeType.REMOVE)
-		@JsonIgnoreProperties
+		
+		@OneToMany(fetch = FetchType.LAZY ,mappedBy = "tema", cascade = CascadeType.REMOVE)
+		@JsonIgnoreProperties("tema")
 		private List<Postagem> postagem;
 		
 		public Long getId() {
